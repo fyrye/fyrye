@@ -1,4 +1,3 @@
-.checkout
-=========
+###Proprietary repository used to store individual projects and testing.
 
-A Symfony project created on January 13, 2017, 11:57 pm.
+_(c) Copyright 2017 fyrye.com, all rights reserved._
