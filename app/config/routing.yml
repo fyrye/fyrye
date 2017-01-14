@@ -1,6 +1,3 @@
-php_units_of_measure:
-    resource: "@PhpUnitsOfMeasureBundle/Resources/config/routing.xml"
-    prefix:   /
 
 
 
