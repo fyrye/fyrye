@@ -1,5 +1,6 @@
 build: false
 clone_folder: c:\projects\fyrye\php-units-of-measure-bundle
+clone_depth: 1
 
 cache:
   - composer.phar
@@ -33,7 +34,7 @@ install:
   - echo curl.cainfo=c:\php\cacert.pem >> php.ini
   - cd c:\projects\fyrye\php-units-of-measure-bundle
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://getcomposer.org/download/1.3.0/composer.phar)
-  - copy /Y .composer\* %APPDATA%\Composer\
+  - php composer.phar self-update
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
   - php composer.phar update --prefer-dist --no-progress --ansi
   - php phpunit install
