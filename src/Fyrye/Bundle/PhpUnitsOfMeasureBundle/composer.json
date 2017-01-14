@@ -1,0 +1,41 @@
+{
+    "name": "fyrye/php-units-of-measure-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony PhpUnitsOfMeasureBundle",
+    "license": "MIT",
+    "homepage": "https://github.com/fyrye/PhpUnitsOfMeasureBundle",
+    "keywords": [
+        "symfony",
+        "bundle",
+        "measure",
+        "unit",
+        "fyrye"
+    ],
+    "authors": [
+        {
+            "name": "fyrye",
+            "email": "admin@fyrye.com",
+            "homepage": "http://fyrye.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.20",
+        "symfony/framework-bundle": "^2.8|^3.2",
+        "symfony/twig-bundle": "^2.8|^3.2",
+        "php-units-of-measure/php-units-of-measure": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fyrye\\Bundle\\PhpUnitsOfMeasureBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1-dev"
+        }
+    }
+}
