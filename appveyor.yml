@@ -35,10 +35,9 @@ install:
   - php composer.phar self-update
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
   - php composer.phar update --prefer-dist --no-progress --ansi
-  - php phpunit install
 
 test_script:
   - cd c:\projects\fyrye\php-units-of-measure-bundle
   - SET X=0
-  - php phpunit --exclude-group benchmark,intl-data || SET X=!errorlevel!
+  - php vendor\bin\phpunit --exclude-group benchmark,intl-data || SET X=!errorlevel!
   - exit %X%
