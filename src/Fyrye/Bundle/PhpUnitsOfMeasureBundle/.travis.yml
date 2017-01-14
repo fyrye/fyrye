@@ -1,0 +1,33 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+env:
+    - SYMFONY_VERSION=2.8.*
+    - SYMFONY_VERSION=3.2.*
+
+
+matrix:
+  include:
+    - php: 5.6
+    - php: 7.0
+  allow_failures:
+    - php: hhvm
+    - php: nightly
+    - php: 7.0
+  fast_finish: true
+
+before_install:
+  - if [[ $TRAVIS_REPO_SLUG = puli/symfony-bundle ]]; then cp .composer-auth.json ~/.composer/auth.json; fi;
+  - composer self-update
+
+install:
+  - if [[ $SYMFONY_VERSION != "" ]]; then composer require "symfony/framework-bundle:${SYMFONY_VERSION}" "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update -n; composer require "symfony/twig-bundle:${SYMFONY_VERSION}" --no-update -n; fi
+  - composer update --prefer-stable --prefer-dist --no-interaction
+
+script:
+    - vendor/bin/phpunit
