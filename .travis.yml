@@ -31,4 +31,8 @@ install:
   - composer update --prefer-stable --prefer-dist --no-interaction
 
 script:
+    - mkdir -p build/logs
     - ./vendor/bin/phpunit -v
+
+after_script:
+    - php ./vendor/bin/coveralls -v
