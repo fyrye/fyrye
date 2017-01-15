@@ -26,4 +26,4 @@ install:
   - composer update --prefer-stable --prefer-dist --no-interaction
 
 script:
-    - vendor/bin/phpunit tests/
+    - ./vendor/bin/phpunit -v
