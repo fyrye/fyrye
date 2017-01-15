@@ -79,7 +79,7 @@ vendor/bin/phpunit -c /vendor/fyrye/php-units-of-measure-bundle/phpunit.xml.dist
 
 ###Pull Requests
 Please create all pull requests against the
-[fyrye/fyrye Repository](https://github.com/fyrye/fyrye/pulls) 
+[fyrye/fyrye Repository](https://github.com/fyrye/php-units-of-measure-bundle/pull/new/master) 
 using the [.github/PULL_REQUEST_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
 
 When making a pull request please follow the Semantic Versioning detailed below.  
