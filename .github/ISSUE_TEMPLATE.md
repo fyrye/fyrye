@@ -7,7 +7,7 @@
 | OS                 | vendor version x86/x64
 | PHP version        | major.minor.patch-x86/x64-NTS/TS
 | Symfony version    | major.minor.patch
-| Relates Package(s) | vendor/package:major.minor.patch
+| Related Package(s) | vendor/package:major.minor.patch
 |                    | fyrye/php-units-of-measure-bundle:^2.0
 
 ####Steps Performed
