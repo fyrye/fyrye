@@ -13,7 +13,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Fyrye\\Bundle\\PhpUnitsOfMeasureBundle\\": "src/Fyrye/Bundle/PhpUnitsOfMeasureBundle/"
+            "Fyrye\\Bundle\\PhpUnitsOfMeasureBundle\\": "src/Fyrye/Bundle/PhpUnitsOfMeasureBundle/",
+            "FrontEndBundle\\": "src/FrontEndBundle/"
         },
         "classmap": [
             "app/AppKernel.php",

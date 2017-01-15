@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@FrontEndBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -33,6 +34,27 @@ framework:
     assets: ~
     php_errors:
         log: true
+
+php_units_of_measure:
+    enabled: true
+    options:
+        auto: true
+    units:
+        Length:
+            UltraMeter:
+                aliases: ['um']
+                factor: 100000000
+            Testing:
+                aliases: ['t']
+                factor: 126
+        Time:
+            enabled: true
+        Custom:
+            CustomUnit:
+                type: native
+            CustomConvert:
+                factor: 100
+
 
 # Twig Configuration
 twig:

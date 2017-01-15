@@ -1,16 +1,31 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+    <parameters>
+        <parameter key="php_units_of_measure.bundles" type="collection"/>
+        <parameter key="php_units_of_measure.registry.namespace">Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry</parameter>
+        <parameter key="php_units_of_measure.library.namespace">PhpUnitsOfMeasure\PhysicalQuantity</parameter>
+        <parameter key="php_units_of_measure.quantity_definition.class">%php_units_of_measure.registry.namespace%\QuantityDefinition</parameter>
+        <parameter key="php_units_of_measure.physical_quantity.class">%php_units_of_measure.registry.namespace%\ConfiguredPhysicalQuantity</parameter>
+    </parameters>
+
     <services>
-        <service id="php_units_of_measure.example" class="Fyrye\Bundle\PhpUnitsOfMeasureBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="php_units_of_measure.registry_manager" class="Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\Manager">
+            <factory class="Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\Manager" method="getInstance" />
+        </service>
+
+        <service id="php_units_of_measure.quantity" alias="php_units_of_measure.registry_manager"/>
+
+        <service id="php_units_of_measure.twig_extension"
+                 class="Fyrye\Bundle\PhpUnitsOfMeasureBundle\Twig\TwigExtension" public="false">
+            <call method="setManager">
+                <argument type="service" id="php_units_of_measure.registry_manager"/>
+            </call>
+            <tag name="twig.extension"/>
         </service>
     </services>
-    -->
+
 </container>
