@@ -10,18 +10,18 @@
 | Related Package(s) | vendor/package:major.minor.patch
 |                    | fyrye/php-units-of-measure-bundle:^2.0
 
-####Steps Performed
+#### Steps Performed
  1. 
  2.
  3.
  4.
  ...
 
-####Expected
+#### Expected
 _provide the desired result of the steps taken_
 
-####Result
+#### Result
 _provide the actual result that occurred when performing the steps_
 
-####Additional Comments
+#### Additional Comments
 _provide any additional comments to better explain your issue or feature request_
