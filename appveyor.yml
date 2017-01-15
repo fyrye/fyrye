@@ -39,5 +39,5 @@ install:
 test_script:
   - cd c:\projects\fyrye\php-units-of-measure-bundle
   - SET X=0
-  - php vendor\bin\phpunit --exclude-group benchmark,intl-data || SET X=!errorlevel!
+  - vendor\bin\phpunit -c phpunit.xml.dist --exclude-group benchmark,intl-data || SET X=!errorlevel!
   - exit %X%
