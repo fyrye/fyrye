@@ -1,14 +1,10 @@
 <?php
 namespace Fyrye\Bundle\PhpUnitsOfMeasureBundle\DependencyInjection;
 
-use Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\ConfiguredPhysicalQuantity;
-use Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\QuantityDefinition;
 use PhpUnitsOfMeasure\AbstractPhysicalQuantity;
-use PhpUnitsOfMeasure\Exception\UnknownUnitOfMeasure;
 use PhpUnitsOfMeasure\UnitOfMeasure;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
