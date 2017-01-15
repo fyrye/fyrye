@@ -6,7 +6,14 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/2d461ba0-f352-4fdc-8760-95868c481708/small.png)](https://insight.sensiolabs.com/projects/2d461ba0-f352-4fdc-8760-95868c481708)
 
+##Open Source Projects
 
-###Proprietary repository used to store individual projects and testing.
+ - [PhpUnitsOfMeasureBundle](https://github.com/fyrye/php-units-of-measure-bundle)
+
+##Disclaimer
+**This is a proprietary repository used to store individual projects and conduct testing.**
+
+Please see the [Open Source Projects](https://github.com/fyrye/fyrye/#open-source-projects) 
+section for publicly available packages.
 
 _(c) Copyright 2017 fyrye.com, all rights reserved._
