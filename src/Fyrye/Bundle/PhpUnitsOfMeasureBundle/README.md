@@ -12,7 +12,7 @@
 This package provides [php-units-of-measure](https://github.com/PhpUnitsOfMeasure/php-units-of-measure) 
 support for use in [Symfony 2](https://github.com/symfony/symfony) projects.
 
-A list of feature changes and implementations can be found in the [CHANGELOG](https://github.com/fyrye/php-units-of-measure-bundle/CHANGELOG.md) and upcoming changes can be found in the [TODO](https://github.com/fyrye/php-units-of-measure-bundle/TODO.md).
+A list of feature changes and implementations can be found in the [CHANGELOG](https://github.com/fyrye/php-units-of-measure-bundle/blob/master/CHANGELOG.md) and upcoming changes can be found in the [TODO](https://github.com/fyrye/php-units-of-measure-bundle/blob/master//TODO.md).
 
 ##Installation
 
@@ -79,7 +79,7 @@ vendor/bin/phpunit -c /vendor/fyrye/php-units-of-measure-bundle/phpunit.xml.dist
 ###Pull Requests
 Please create all pull requests against the
 [fyrye/fyrye Repository](https://github.com/fyrye/fyrye/issues/new/) 
-using the [.github/PULL_REQUEST_TEMPLATE](https://github.com/fyrye/fyrye/.github/PULL_REQUEST_TEMPLATE.md).
+using the [.github/PULL_REQUEST_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
 
 When making a pull request please follow the Semantic Versioning detailed below.  
 
@@ -109,7 +109,7 @@ conventional semantic version rules.
 
 Please create issues related to this project at the 
 [fyrye/fyrye Repository](https://github.com/fyrye/fyrye/issues/new/) 
-using the [.github/ISSUE_TEMPLATE](https://github.com/fyrye/fyrye/.github/ISSUE_TEMPLATE.md)
+using the [.github/ISSUE_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/ISSUE_TEMPLATE.md)
 
 ##### Example:
 
