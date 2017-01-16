@@ -138,83 +138,129 @@ _`:default:index.html.twig`_
       - [type](#configuration-physical-quantity-unit-type)
       - [aliases](#configuration-physical-quantity-unit-aliases)
 
-<b id="configuration-enabled">enabled</b>
-
-⋅⋅⋅**type**: `boolean` **default**: `true`
-
-Allows for disabling the Bundle from registering 
+<dl>
+<dt id="configuration-enabled">enabled</dt>
+<dd>
+<p>
+<b>type</b>: <code>boolean</code> <b>default</b>: <code>true</code>
+</p>
+<p>
+Allows for disabling the Bundle from registering
 the Physical Quantities as services.
-  
-<b id="configuration-options">options</b>
-
+</p>
+</dd>
+<dt id="configuration-options">options</dt>
+<dd>
+<p>
 Collection of key value options sent to the registry manager.
-
-⋅⋅⋅<b id="configuration-auto">auto</b>
-
-⋅⋅⋅⋅⋅⋅*type*: `boolean` **default**: `false`
-
-⋅⋅⋅Controls the automatic registration of integrated Physical Quantities available in 
-⋅⋅⋅the php-units-of-measure package, that are not explicitly defined.
-⋅⋅⋅When this option is false, integrated physical quantities must be explicitly defined
-⋅⋅⋅within the `units` configuration section.
-
+</p>
+<dl>
+<dt id="configuration-auto">auto</dt>
+<dd>
+<p>
+<b>type</b>: <code>boolean</code> <b>default</b>: <code>false</code>
+</p>
+<p>
+Controls the automatic registration of integrated Physical Quantities available in
+the php-units-of-measure package, that are not explicitly defined.
+When this option is false, integrated physical quantities must be explicitly defined
+within the `units` configuration section.
+</p>
+                    
 ```yaml
-   php_units_of_measure:
-      options:
-         auto: true
+php_units_of_measure:
+options:
+auto: true
 ```
 
-<b id="configuration-bundles">bundles</b>
-
-⋅⋅⋅*type*: `array` *default*: `all bundles`
-
-Collection of bundle names to scan the `BundleName/PhysicalQuantity` 
-directory and registers a service for all objects contained within the directory 
+</dd>
+</dl>
+</dd>
+<dt id="configuration-bundles">bundles</dt>
+<dd>
+<p>
+<b>type</b>: <code>array</code> <b>default</b>: <code>all bundles</code>
+</p>
+<p>
+Collection of bundle names to scan the `BundleName/PhysicalQuantity`
+directory and registers a service for all objects contained within the directory
 that extends `PhpUnitsOfMeasure\AbstractPhysicalQuantity`.
-
-<b id="configuration-auto">units</b>
-
+</p>
+</dd>
+<dt id="configuration-auto">units</dt>
+<dd>
+<p>
 Collection of Physical Quantities and their related unit configurations.
-
-⋅⋅⋅<b id="configuration-physical-quantity">PhysicalQuantity</b>
-
-⋅⋅⋅Collection of Physical Quantity names and associated Unit configurations.
-
->Physical Quantities that are integrated with the php-units-of-measure package
->will be added as services.
->If a Physical Quantity is specified that has not been integrated with
->the php-units-of-measure package, a proxy object is registered to enable its
->usage within the service container.
-
-⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-enabled">enabled</b>
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `boolean` **default**: `true` **required**
-
-⋅⋅⋅⋅⋅⋅Control the enabling of integrated Physical Quantities without 
-⋅⋅⋅⋅⋅⋅defining addition custom units.
-
-⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit">Unit</b>
-
-⋅⋅⋅⋅⋅⋅Specifies a custom unit for use with the parent physical quantity
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-factor">factor</b>
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `float` **default**: `1`
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅The factor to apply to the unit when the specified type is linear
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-type">type</b>
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `string` **default**: `linear` 
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅Specifies the unit type as `linear` or `native`. When specified as `native` 
-⋅⋅⋅⋅⋅⋅⋅⋅⋅the factor used will always be set to `1`.
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-aliases">aliases</b>
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `array`
-
-⋅⋅⋅⋅⋅⋅⋅⋅⋅Collection of alias names to use for the specified unit. Such as `ft`, `feet`.
+</p>
+<dl>
+<dt id="configuration-physical-quantity">PhysicalQuantity</dt>
+<dd>
+<p>
+Collection of Physical Quantity names and associated Unit configurations.
+</p>
+<blockquote>
+<p>
+Physical Quantities that are integrated with the php-units-of-measure package
+will be added as services.
+If a Physical Quantity is specified that has not been integrated with
+the php-units-of-measure package, a proxy object is registered to enable its
+usage within the service container.
+</p>
+</blockquote>
+<dl>
+<dt id="configuration-physical-quantity-enabled">enabled</dt>
+<dd>
+<p>
+<b>type</b>: <code>boolean</code> <b>default</b>: <code>true</code> <b>required</b>
+</p>
+<p>
+Control the enabling of integrated Physical Quantities without
+defining addition custom units.
+</p>
+</dd>
+<dt id="configuration-physical-quantity-unit">Unit</dt>
+<dd>
+<p>
+Specifies a custom unit for use with the parent physical quantity
+</p>
+<dl>
+<dt id="configuration-physical-quantity-unit-factor">factor</dt>
+<dd>
+<p>
+<b>type</b>: <code>float</code> <b>default</b>: <code>1</code>
+</p>
+<p>
+The factor to apply to the unit when the specified type is linear
+</p>
+</dd>
+<dt id="configuration-physical-quantity-unit-type">type</dt>
+<dd>
+<p>
+<b>type</b>: <code>string</code> <b>default</b>: <code>linear</code>
+</p>
+<p>
+Specifies the unit type as <code>linear</code> or <code>native</code>. When
+specified as <code>native</code>
+the factor used will always be set to <code>1</code>.
+</p>
+</dd>
+<dt id="configuration-physical-quantity-unit-aliases">aliases</dt>
+<dd>
+<p>
+<b>type</b>: <code>array</code>
+</p>
+<p>
+Collection of alias names to use for the specified unit. Such as <code>ft</code>,
+<code>feet</code>.
+</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### Full Configuration
 
