@@ -70,7 +70,7 @@ class AppKernel
 ### Usage
 
 Enabled Physical Quantities are added as [Symfony Services](http://symfony.com/doc/current/service_container.html)
-by name to the `php_units_of_measure.quantity.%physical_quanitty%` namespace.
+by name to the `php_units_of_measure.quantity.%physical_quantity%` namespace.
 Additionally the Registry Manager that holds all of the Physical Quantity definitions is
 also available for use as `php_units_of_measure.quantity`.
 
