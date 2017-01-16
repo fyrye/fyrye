@@ -1,4 +1,4 @@
-#PhpUnitsOfMeasureBundle
+# PhpUnitsOfMeasureBundle
 
 [![Build Status](https://travis-ci.org/fyrye/php-units-of-measure-bundle.svg?branch=master)](https://travis-ci.org/fyrye/php-units-of-measure-bundle)
 [![Build status](https://ci.appveyor.com/api/projects/status/vv214lv6x0xvv01h/branch/master?svg=true)](https://ci.appveyor.com/project/fyrye/phpunitsofmeasurebundle/branch/master)
@@ -8,14 +8,16 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/eb5fe6b5-e19b-4511-b721-22201fc2e1c3/small.png)](https://insight.sensiolabs.com/projects/eb5fe6b5-e19b-4511-b721-22201fc2e1c3)
 
-##Introduction
+## Introduction
 
 This package provides [php-units-of-measure](https://github.com/PhpUnitsOfMeasure/php-units-of-measure) 
 support for use in [Symfony 2](https://github.com/symfony/symfony) projects.
 
-A list of feature changes and implementations can be found in the [CHANGELOG](https://github.com/fyrye/php-units-of-measure-bundle/blob/master/CHANGELOG.md) and upcoming changes can be found in the [TODO](https://github.com/fyrye/php-units-of-measure-bundle/blob/master//TODO.md).
+A list of feature changes and implementations can be found in the [CHANGELOG](https://github.com/fyrye/php-units-of-measure-bundle/blob/master/CHANGELOG.md) and upcoming changes can be found in the [TODO](https://github.com/fyrye/php-units-of-measure-bundle/blob/master/TODO.md).
 
-##Installation
+For contributing to this package please see [CONTRIBUTING](https://github.com/fyrye/php-units-of-measure-bundle/blob/master/CONTRIBUTING.md).
+
+## Installation
 
 The package is best included in your Symfony 2 project via Composer. 
 See the [Composer website](http://getcomposer.org/) for more details.
@@ -29,7 +31,7 @@ Issue the following command to include the package into your project libraries.
 php composer.phar require fyrye/php-units-of-measure-bundle
 ```
 
-###Manual Download
+### Manual Download
 
 Download the desired version from the 
 [releases section](https://github.com/fyrye/php-units-of-measure-bundle/releases).
@@ -38,7 +40,7 @@ Extract the source files into your project libraries directory.
 
 Use a [PSR-4 autoloader](http://www.php-fig.org/psr/psr-4/) to autoload the project classes for your Symfony 2 project.
 
-###Enable the Bundle
+### Enable the Bundle
 
 Open your `app/AppKernel.php` file and add the package to your bundles configuration.
 
@@ -59,90 +61,184 @@ class AppKernel
 }
 ```
 
-##Getting Started
-WIP
+## Getting Started
 
-###Usage
-WIP
+ 1. [Use in a Controller](#controller)
+ 2. [Use in a Twig Template](#twig)
+ 3. [Configuration](#configuration)
 
-###Configuration
-WIP
+### Usage
 
-##Testing and Contributing
+Enabled Physical Quantities are added as [Symfony Services](http://symfony.com/doc/current/service_container.html)
+by name to the `php_units_of_measure.quantity.%physical_quanitty%` namespace.
+Additionally the Registry Manager that holds all of the Physical Quantity definitions is
+also available for use as `php_units_of_measure.quantity`.
 
-###Unit Testing
-All tests with this project can be manually run by issuing 
+All registered Physical Quantities become available as Twig Filters 
+by using the `%value%|uom_%physical_quantity%(%from%, %to%)`. 
 
-```
-vendor/bin/phpunit -c /vendor/fyrye/php-units-of-measure-bundle/phpunit.xml.dist /vendor/fyrye/php-units-of-measure-bundle/Tests
-```
+The registry manager is available as the `uom` function 
+and optionally accepts the quantity, value and unit arguments. 
+`uom(%quantity%, %value%, %unit)` or `uom().getUnit(%quantity%, %value%, %unit%)`.
 
-###Pull Requests
-Please create all pull requests against the
-[fyrye/fyrye Repository](https://github.com/fyrye/php-units-of-measure-bundle/pull/new/master) 
-using the [.github/PULL_REQUEST_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
+Please see the Configuration section for details on how to enable or add
+Physical Quantities and Units.
 
-When making a pull request please follow the Semantic Versioning detailed below.  
+#### Controller
 
-###Semantic Versioning
-
-In order to identify the compatibility characteristics of any version
-of the service, we can adopt a form of [semantic
-versioning](http://semver.org/) tailored to the notions of binary
-compatibility.  With this proposal, the form the definitions of major,
-minor and patch numbers look like this:
-
-    MAJOR.MINOR.PATCH
-
-An increment of the MAJOR (first) number represents an binary backward
-incompatible upgrade to the previous version.  Clients will not be
-able to connect to this version of the service without updating their
-service stubs to the latest version, which will require recompilation
-and changes to the source.
-
-In other words, you can't connect to a 2.* service with stubs generated
-from a 1.* version of the IDL.
-
-The meaning of MINOR and PATCH increments would still align with the
-conventional semantic version rules.
-
-###Reporting Issues
-
-Please create issues related to this project at the 
-[fyrye/fyrye Repository](https://github.com/fyrye/fyrye/issues/new/) 
-using the [.github/ISSUE_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/ISSUE_TEMPLATE.md)
-
-##### Example:
-
-| Q                  | A                                      |
-| ------------------ | -----                                  |
-| Bug report?        | yes                                    |
-| Feature request?   | no                                     |
-| BC Break report?   | no                                     |
-| RFC?               | no                                     |
-| OS                 | Window 10 pro x64                      |
-| PHP version        | 5.6.28-x64-NTS                         |
-| Symfony version    | 3.2.1                                  |
-| Related Package(s) | fyrye/php-units-of-measure-bundle:^2.0 |
-
-####Steps Performed
- 1. `php composer.phar require fyrye/php-units-of-measure-bundle:^2.0`
- 2. Added `new \Fyrye\Bundle\PhpUnitsOfMeasureBundle(),` to AppKernel Bundles 
- 3. `php bin/console --env=dev cache:clear`
-
-####Expected
-Symfony to successfully clear the cache
-```
-[OK] Cache for the "dev" environment (debug=true) was successfully cleared.
+_`src/AppBundle/Controller/DefaultController.php`_
+```php   
+namespace AppBundle\Controller;
+    
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    
+class DefaultContoller extends Conoller
+{
+    
+   public function indexAction()
+   {
+       //using the registry manager
+       $uom = $this->controller->get('php_units_of_measure.quantity');
+       $yard = $uom->getUnit('length', 1, 'yd');
+       $feet = $yard->toUnit('ft'); //return 3
+       
+       //obtaining a physical quantity
+       $length = $this->controller->get('php_units_of_measure.quantity.length');
+       $feet = $length->getUnit(3, 'ft');
+       $feet->toUnit('yd'); //returns 1
+       
+       return $this->render(':default:index.html.twig');
+   }
+    
+}
 ```
 
-####Result
-Received Error Message 
-```
-Class '\Fyrye\Bundle\PhpUnitsOfMesureBundle' not found.
+#### Twig
+_`:default:index.html.twig`_
+```twig
+{% block content %}
+    1 yard = {{ 1|uom_length('yd', 'feet') }} feet
+    1 mile = {{ uom('length', 2 'mi').toUnit('inches') }} inches
+{% endblock %}
 ```
 
-####Additional Comments
-Removing the bundle from AppKernel resolves the issue.
+### Configuration
+
+[Full Example](#full-configuration)
+
+- [enabled](#configuration-enabled)
+- [options](#configuration-options)
+  - [auto](#configuration-auto)
+- [bundles](#configuration-bundles)
+- [units](#configuration-units)
+  - [PhysicalQuantity](#configuration-physical-quantity)
+    - [enabled](#configuration-physical-quantity-enabled)
+    - [Unit](#configuration-physical-quantity-unit)
+      - [factor](#configuration-physical-quantity-unit-factor)
+      - [type](#configuration-physical-quantity-unit-type)
+      - [aliases](#configuration-physical-quantity-unit-aliases)
+
+<b id="configuration-enabled">enabled</b>
+
+⋅⋅⋅**type**: `boolean` **default**: `true`
+
+Allows for disabling the Bundle from registering 
+the Physical Quantities as services.
+  
+<b id="configuration-options">options</b>
+
+Collection of key value options sent to the registry manager.
+
+⋅⋅⋅<b id="configuration-auto">auto</b>
+
+⋅⋅⋅⋅⋅⋅*type*: `boolean` **default**: `false`
+
+⋅⋅⋅Controls the automatic registration of integrated Physical Quantities available in 
+⋅⋅⋅the php-units-of-measure package, that are not explicitly defined.
+⋅⋅⋅When this option is false, integrated physical quantities must be explicitly defined
+⋅⋅⋅within the `units` configuration section.
+
+```yaml
+   php_units_of_measure:
+      options:
+         auto: true
+```
+
+<b id="configuration-bundles">bundles</b>
+
+⋅⋅⋅*type*: `array` *default*: `all bundles`
+
+Collection of bundle names to scan the `BundleName/PhysicalQuantity` 
+directory and registers a service for all objects contained within the directory 
+that extends `PhpUnitsOfMeasure\AbstractPhysicalQuantity`.
+
+<b id="configuration-auto">units</b>
+
+Collection of Physical Quantities and their related unit configurations.
+
+⋅⋅⋅<b id="configuration-physical-quantity">PhysicalQuantity</b>
+
+⋅⋅⋅Collection of Physical Quantity names and associated Unit configurations.
+
+>Physical Quantities that are integrated with the php-units-of-measure package
+>will be added as services.
+>If a Physical Quantity is specified that has not been integrated with
+>the php-units-of-measure package, a proxy object is registered to enable its
+>usage within the service container.
+
+⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-enabled">enabled</b>
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `boolean` **default**: `true` **required**
+
+⋅⋅⋅⋅⋅⋅Control the enabling of integrated Physical Quantities without 
+⋅⋅⋅⋅⋅⋅defining addition custom units.
+
+⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit">Unit</b>
+
+⋅⋅⋅⋅⋅⋅Specifies a custom unit for use with the parent physical quantity
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-factor">factor</b>
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `float` **default**: `1`
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅The factor to apply to the unit when the specified type is linear
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-type">type</b>
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `string` **default**: `linear` 
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅Specifies the unit type as `linear` or `native`. When specified as `native` 
+⋅⋅⋅⋅⋅⋅⋅⋅⋅the factor used will always be set to `1`.
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅<b id="configuration-physical-quantity-unit-aliases">aliases</b>
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅**type**: `array`
+
+⋅⋅⋅⋅⋅⋅⋅⋅⋅Collection of alias names to use for the specified unit. Such as `ft`, `feet`.
+
+#### Full Configuration
+
+_`app/config/config.yml`_
+
+```yaml
+php_units_of_measure:
+    enabled: true #enable the service
+    options:
+       auto: true #enable auto registration of integrated Physical Quantities
+    units:
+       Length: #enable the Length Physical Quantity and add custom units 
+           UltraMeter:
+               factor: 100000000
+               aliases: ['um']
+       Mass:
+           enabled: true #enable the Physical Quantity without changes
+       CustomQuantity: #create a custom quantity with the following units
+           CustomUnit:  #define the native unit
+               type: native
+               aliases: ['cqu']
+           CustomUnitTest: #create another unit that is half of the native unit
+               factor: .5
+               aliases: ['cqut']
+```
 
 
