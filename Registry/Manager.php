@@ -23,13 +23,12 @@ class Manager
     private static $instance;
 
     /**
-     * @param array $options
      * @return static
      */
-    public static function getInstance(array $options = [])
+    public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new static($options);
+            self::$instance = new static();
         }
 
         return self::$instance;
