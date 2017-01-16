@@ -99,12 +99,12 @@ class DefaultContoller extends Conoller
    public function indexAction()
    {
        //using the registry manager
-       $uom = $this->controller->get('php_units_of_measure.quantity');
+       $uom = $this->container->get('php_units_of_measure.quantity');
        $yard = $uom->getUnit('length', 1, 'yd');
        $feet = $yard->toUnit('ft'); //return 3
        
        //obtaining a physical quantity
-       $length = $this->controller->get('php_units_of_measure.quantity.length');
+       $length = $this->container->get('php_units_of_measure.quantity.length');
        $feet = $length->getUnit(3, 'ft');
        $feet->toUnit('yd'); //returns 1
        
