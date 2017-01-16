@@ -23,28 +23,6 @@ class Manager
     private static $instance;
 
     /**
-     * @var bool
-     */
-    private static $auto = false;
-
-    /**
-     * Manager constructor.
-     * @param array $options
-     */
-    protected function __construct(array $options)
-    {
-        $options = array_merge(
-            [
-                'auto' => false,
-            ],
-            $options
-        );
-        if (true === $options['auto']) {
-            self::$auto = true;
-        }
-    }
-
-    /**
      * @param array $options
      * @return static
      */
