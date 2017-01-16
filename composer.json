@@ -41,6 +41,12 @@
             "Tests\\": "Tests/"
         }
     },
+    "conflict": {
+        "php-units-of-measure/php-units-of-measure": "<2.1"
+    },
+    "replace": {
+        "triplepoint/php-units-of-measure-bundle": "*"
+    },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
