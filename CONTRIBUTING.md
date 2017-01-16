@@ -1,20 +1,20 @@
-## Contributing
+# Contributing
 
-### Unit Testing
+## Unit Testing
 All tests with this project can be manually run by issuing 
 
 ```
 vendor/bin/phpunit -c /vendor/fyrye/php-units-of-measure-bundle/phpunit.xml.dist /vendor/fyrye/php-units-of-measure-bundle/Tests
 ```
 
-### Pull Requests
+## Pull Requests
 Please create all pull requests against the
 [fyrye/fyrye Repository](https://github.com/fyrye/php-units-of-measure-bundle/pull/new/master) 
 using the [.github/PULL_REQUEST_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
 
 When making a pull request please follow the Semantic Versioning detailed below.  
 
-###Semantic Versioning
+##Semantic Versioning
 
 In order to identify the compatibility characteristics of any version
 of the service, we can adopt a form of [semantic
@@ -36,13 +36,13 @@ from a 1.* version of the IDL.
 The meaning of MINOR and PATCH increments would still align with the
 conventional semantic version rules.
 
-### Reporting Issues
+## Reporting Issues
 
 Please create issues related to this project at the 
 [fyrye/fyrye Repository](https://github.com/fyrye/fyrye/issues/new/) 
 using the [.github/ISSUE_TEMPLATE](https://github.com/fyrye/fyrye/blob/master/.github/ISSUE_TEMPLATE.md)
 
-##### Example:
+### Example:
 
 | Q                  | A                                      |
 | ------------------ | -----                                  |
