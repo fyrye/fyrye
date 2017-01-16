@@ -167,11 +167,13 @@ When this option is false, integrated physical quantities must be explicitly def
 within the `units` configuration section.
 </p>
                     
-```yaml
+<div class="highlight highlight-source-yaml">
+<pre>
 php_units_of_measure:
 options:
 auto: true
-```
+</pre>
+</div>
 
 </dd>
 </dl>
