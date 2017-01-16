@@ -1,10 +1,10 @@
 #PhpUnitsOfMeasureBundle TODO
 
-## High Priority - _release 2.1.1_
+## High Priority - _release 2.1.2_
 
  - [ ] Add Unit Testing Coverage
  - [X] Update Bundle Auto Registration
- - [ ] Add twig configuration option to allow enable/disable of twig extension
+ - [X] Add twig configuration option to allow enable/disable of twig extension
  
 ## Low Priority
  - [ ] Add Tagging Support 
