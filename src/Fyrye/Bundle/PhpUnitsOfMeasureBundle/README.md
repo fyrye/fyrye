@@ -164,7 +164,7 @@ Collection of key value options sent to the registry manager.
 Controls the automatic registration of integrated Physical Quantities available in
 the php-units-of-measure package, that are not explicitly defined.
 When this option is false, integrated physical quantities must be explicitly defined
-within the `units` configuration section.
+within the <code>units</code> configuration section.
 </p>
 <div class="highlight highlight-source-yaml"><pre><span class="pl-ent">php_units_of_measure:</span>
     <span class="pl-ent">options:</span>
@@ -178,9 +178,9 @@ within the `units` configuration section.
 <b>type</b>: <code>array</code> <b>default</b>: <code>all bundles</code>
 </p>
 <p>
-Collection of bundle names to scan the `BundleName/PhysicalQuantity`
+Collection of bundle names to scan the <code>BundleName/PhysicalQuantity</code>
 directory and registers a service for all objects contained within the directory
-that extends `PhpUnitsOfMeasure\AbstractPhysicalQuantity`.
+that extends <code>PhpUnitsOfMeasure\AbstractPhysicalQuantity</code>.
 </p>
 </dd>
 <dt id="configuration-auto">units</dt>
