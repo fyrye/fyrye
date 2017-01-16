@@ -147,7 +147,9 @@ class PhpUnitsOfMeasureExtension extends Extension
     }
 
     /**
-     * {@inheritDoc}
+     * @param array $config
+     * @param ContainerBuilder $container
+     * @return Configuration
      */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
