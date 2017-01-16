@@ -48,6 +48,9 @@ class PhpUnitsOfMeasureExtension extends Extension
         }
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+        if (false === $config['twig']) {
+            $container->removeDefinition('php_units_of_measure.twig_extension');
+        }
         $container->setParameter('php_units_of_measure.auto', $config['auto']);
         $container->setParameter('php_units_of_measure.bundles', $config['bundles']);
         $this->auto = constant('self::' . $config['auto']);

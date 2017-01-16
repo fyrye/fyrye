@@ -129,6 +129,7 @@ _`:default:index.html.twig`_
 
 - [enabled](#configuration-enabled)
 - [auto](#configuration-auto)
+- [twig](#configuration-twig)
 - [bundles](#configuration-bundles)
 - [units](#configuration-units)
   - [PhysicalQuantity](#configuration-physical-quantity)
@@ -168,6 +169,18 @@ Accepted values are:
 <li><code>none</code>: <b>ONLY</b> register PhysicalQuantities specified explicitly in the <code>units</code> configuration section as services</li>
 </ul>
 </blockquote>
+<dt id="configuration-twig">twig</dt>
+<dd>
+<p>
+<b>type</b>: <code>boolean</code> <b>default</b>: <code>true</code>
+</p>
+<p>
+Controls the use of the Twig Extension. When set to <code>false</code>, the twig extension is not loaded.
+</p>
+<blockquote>
+Disabling the Twig Extension will limit usage to be available only within the container service(s) context. 
+</blockquote>
+</dd>
 <dt id="configuration-bundles">bundles</dt>
 <dd>
 <p>
