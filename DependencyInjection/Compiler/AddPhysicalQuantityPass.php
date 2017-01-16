@@ -23,6 +23,11 @@ class AddPhysicalQuantityPass implements CompilerPassInterface
     private $services = [];
 
     /**
+     * @var ContainerBuilder
+     */
+    private $container;
+
+    /**
      * You can modify the container here before it is dumped to PHP code.
      * @param ContainerBuilder $container
      */
@@ -40,48 +45,64 @@ class AddPhysicalQuantityPass implements CompilerPassInterface
                 'You need the symfony/finder component to register PhysicalQuantity objects from bundles.'
             );
         }
+        $this->container = $container;
         /** @var array|null $bundles */
         if ($bundles = $container->getParameter('php_units_of_measure.bundles')) {
-            $bundleMetaData = $container->getParameter('kernel.bundles_metadata');
-            $finder = new Finder();
-            foreach ($bundles as $bundle) {
-                if (!isset($bundleMetaData[$bundle]['path'])) {
-                    continue;
-                }
-                $bundlePath = $bundleMetaData[$bundle]['path'];
-                $physicalQuantityPath = $bundlePath . '/PhysicalQuantity';
-                if (!is_dir($physicalQuantityPath)) {
-                    continue;
-                }
-                $finder->files()->name('*.php')->in($physicalQuantityPath);
-                $this->scanBundle($container, $finder, $bundleMetaData[$bundle]['namespace']);
-            }
-            foreach ($this->services as $serviceName) {
-                $container
-                    ->getDefinition('php_units_of_measure.registry_manager')
-                    ->addMethodCall('registerDefinition', [new Reference($serviceName)]);
-            }
+            $services = $this->getBundleServices($bundles);
+            $this->registerServices($services);
         }
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param \Symfony\Component\Finder\Finder $finder
-     * @param $namespace
+     * @param array $bundles
+     * @return array
      */
-    private function scanBundle(ContainerBuilder $container, Finder $finder, $namespace)
+    private function getBundleServices(array $bundles)
     {
-        foreach ($finder as $file) {
+        $bundleMetaData = $this->container->getParameter('kernel.bundles_metadata');
+        foreach ($bundles as $bundle) {
+            if (
+                isset($bundleMetaData[$bundle]['path']) &&
+                is_dir($path = $bundleMetaData[$bundle]['path'] . '/PhysicalQuantity')
+            ) {
+                $this->scanDirectory($bundleMetaData[$bundle]['namespace'], $path);
+            }
+        }
+
+        return $this->services;
+    }
+
+    /**
+     * @param array $services
+     */
+    private function registerServices(array $services)
+    {
+        foreach ($services as $serviceName) {
+            $this->container
+                ->getDefinition('php_units_of_measure.registry_manager')
+                ->addMethodCall('registerDefinition', [new Reference($serviceName)]);
+        }
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $path
+     */
+    private function scanDirectory($namespace, $path)
+    {
+        /** @var Finder $files */
+        $files = Finder::create()->files()->name('*.php')->in($path);
+        foreach ($files as $file) {
             $quantityName = $file->getBasename('.php');
             $class = $namespace . '\\PhysicalQuantity\\' . $quantityName;
             $serviceName = 'php_units_of_measure.quantity.' . $this->normalizeName($quantityName);
             $r = new \ReflectionClass($class);
             if ($r->isSubclassOf(AbstractPhysicalQuantity::class) && !$r->isAbstract()) {
-                if ($container->has($serviceName)) {
-                    $container->removeDefinition($serviceName);
+                if ($this->container->has($serviceName)) {
+                    $this->container->removeDefinition($serviceName);
                 }
-                $service = $container->register($serviceName, '%php_units_of_measure.quantity_definition.class%');
-                $service->setArguments([$quantityName, $class,]);
+                $service = $this->container->register($serviceName, '%php_units_of_measure.quantity_definition.class%');
+                $service->setArguments([$quantityName, $class]);
                 $this->services[] = $serviceName;
             }
         }
