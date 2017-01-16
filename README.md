@@ -119,7 +119,7 @@ _`:default:index.html.twig`_
 ```twig
 {% block content %}
     1 yard = {{ 1|uom_length('yd', 'feet') }} feet
-    1 mile = {{ uom('length', 2 'mi').toUnit('inches') }} inches
+    1 mile = {{ uom('length', 2, 'mi').toUnit('inches') }} inches
 {% endblock %}
 ```
 
