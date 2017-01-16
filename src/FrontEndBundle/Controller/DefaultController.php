@@ -1,9 +1,12 @@
 <?php
 namespace FrontEndBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * {@inheritDoc}
+ */
 class DefaultController extends Controller
 {
     /**
@@ -26,7 +29,8 @@ class DefaultController extends Controller
         $yard = $length->getUnit(1, 'yd');
         $another = $length->getUnit(2, 'yd');
         $pascal = $quantity->getUnit('pressure', '1', 'pascal');
-
+        $viscosity = $this->container->get('php_units_of_measure.quantity.viscosity');
+        $stokes = $viscosity->getUnit(1, 'stoke');
         return $this->render(
             'FrontEndBundle:Default:uom.html.twig',
             [
@@ -36,6 +40,7 @@ class DefaultController extends Controller
                 'inches_2' => $another->toUnit('in'),
                 'mile_feet' => $mile->toUnit('ft'),
                 'psi' => $pascal->toUnit('psi'),
+                'cst' => $stokes->toUnit('cst')
             ]
         );
     }
