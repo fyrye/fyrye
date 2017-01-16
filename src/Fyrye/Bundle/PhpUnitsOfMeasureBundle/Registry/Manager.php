@@ -85,7 +85,7 @@ class Manager
     public function getDefinition($name)
     {
         $definitionName = strtolower($name);
-        if (!$this->hasDefinition($definitionName) && !$this->autoRegister($definitionName)) {
+        if (!$this->hasDefinition($definitionName)) {
             throw new \InvalidArgumentException('Unknown Physical Quantity: "' . $name . '"');
         }
 
@@ -121,25 +121,5 @@ class Manager
     public function getUnit($quantity, $value, $unit)
     {
         return $this->getDefinition($quantity)->getUnit($value, $unit);
-    }
-
-    /**
-     * auto registration of a physical quantity into the registry
-     * @param string $unit
-     * @return bool
-     */
-    private function autoRegister($unit)
-    {
-        if (true === self::$auto) {
-            $physicalQuantity = 'PhpUnitsOfMeasure\\PhysicalQuantity\\' . ucfirst($unit);
-            if (class_exists($physicalQuantity)) {
-                $definition = new QuantityDefinition($unit, $physicalQuantity);
-                $this->registerDefinition($definition);
-
-                return true;
-            }
-        }
-
-        return false;
     }
 }
