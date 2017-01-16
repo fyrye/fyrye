@@ -37,13 +37,12 @@ framework:
 
 php_units_of_measure:
     enabled: true
-    options:
-        auto: true
+    auto: all
     units:
         Length:
             UltraMeter:
-                aliases: ['um']
-                factor: 100000000
+                aliases: 'um'
+                factor: 1e6
             Testing:
                 aliases: ['t']
                 factor: 126
