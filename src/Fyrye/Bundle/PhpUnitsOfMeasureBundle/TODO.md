@@ -3,7 +3,8 @@
 ## High Priority - _release 2.1.1_
 
  - [ ] Add Unit Testing Coverage
- - [ ] Update Bundle Auto Registration
+ - [X] Update Bundle Auto Registration
+ - [ ] Add twig configuration option to allow enable/disable of twig extension
  
 ## Low Priority
  - [ ] Add Tagging Support 
