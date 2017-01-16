@@ -166,15 +166,9 @@ the php-units-of-measure package, that are not explicitly defined.
 When this option is false, integrated physical quantities must be explicitly defined
 within the `units` configuration section.
 </p>
-                    
-<div class="highlight highlight-source-yaml">
-<pre>
-php_units_of_measure:
-options:
-auto: true
-</pre>
-</div>
-
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">php_units_of_measure:</span>
+    <span class="pl-ent">options:</span>
+        <span class="pl-ent">auto:</span> <span class="pl-c1">true</span></pre></div>
 </dd>
 </dl>
 </dd>
