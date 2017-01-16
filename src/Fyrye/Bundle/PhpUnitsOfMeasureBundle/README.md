@@ -66,6 +66,7 @@ class AppKernel
  1. [Use in a Controller](#controller)
  2. [Use in a Twig Template](#twig)
  3. [Configuration](#configuration)
+ 4. [Loading a Quantity from a Bundle](#bundle-loading)
 
 ### Usage
 
@@ -127,8 +128,7 @@ _`:default:index.html.twig`_
 [Full Example](#full-configuration)
 
 - [enabled](#configuration-enabled)
-- [options](#configuration-options)
-  - [auto](#configuration-auto)
+- [auto](#configuration-auto)
 - [bundles](#configuration-bundles)
 - [units](#configuration-units)
   - [PhysicalQuantity](#configuration-physical-quantity)
@@ -149,41 +149,37 @@ Allows for disabling the Bundle from registering
 the Physical Quantities as services.
 </p>
 </dd>
-<dt id="configuration-options">options</dt>
-<dd>
-<p>
-Collection of key value options sent to the registry manager.
-</p>
-<dl>
 <dt id="configuration-auto">auto</dt>
 <dd>
 <p>
-<b>type</b>: <code>boolean</code> <b>default</b>: <code>false</code>
+<b>type</b>: <code>string</code> <b>default</b>: <code>all</code>
 </p>
 <p>
-Controls the automatic registration of integrated Physical Quantities available in
-the php-units-of-measure package, that are not explicitly defined.
-When this option is false, integrated physical quantities must be explicitly defined
+Controls the registration of integrated, bundle, or specified Physical Quantities as services.
+When this option is <code>none</code>, integrated physical quantities must be explicitly defined
 within the <code>units</code> configuration section.
 </p>
-<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">php_units_of_measure:</span>
-    <span class="pl-ent">options:</span>
-        <span class="pl-ent">auto:</span> <span class="pl-c1">true</span></pre></div>
-</dd>
-</dl>
-</dd>
+<blockquote>
+Accepted values are: 
+<ul>
+<li><code>all</code>: registers bundles, integrated, and config physical quantities as services</li> 
+<li><code>integrated</code>: <b>ONLY</b> register integrated physical quantities as services</li> 
+<li><code>bundles</code>: <b>ONLY</b> register bundle PhysicalQuantity objects as services</li> 
+<li><code>none</code>: <b>ONLY</b> register PhysicalQuantities specified explicitly in the <code>units</code> configuration section as services</li>
+</ul>
+</blockquote>
 <dt id="configuration-bundles">bundles</dt>
 <dd>
 <p>
-<b>type</b>: <code>array</code> <b>default</b>: <code>all bundles</code>
+<b>type</b>: <code>array</code>
 </p>
 <p>
-Collection of bundle names to scan the <code>BundleName/PhysicalQuantity</code>
-directory and registers a service for all objects contained within the directory
-that extends <code>PhpUnitsOfMeasure\AbstractPhysicalQuantity</code>.
+Collection of bundle names to scan for the <code>BundleName/PhysicalQuantity</code>
+directory. All objects within the directory that extends 
+<code>PhpUnitsOfMeasure\AbstractPhysicalQuantity</code> are registered as services.
 </p>
 </dd>
-<dt id="configuration-auto">units</dt>
+<dt id="configuration-units">units</dt>
 <dd>
 <p>
 Collection of Physical Quantities and their related unit configurations.
@@ -265,15 +261,13 @@ _`app/config/config.yml`_
 ```yaml
 php_units_of_measure:
     enabled: true #enable the service
-    options:
-       auto: true #enable auto registration of integrated Physical Quantities
+    auto: all
     units:
+       Mass: { enabled: true } #enable the Physical Quantity without changes
        Length: #enable the Length Physical Quantity and add custom units 
            UltraMeter:
-               factor: 100000000
+               factor: .0001
                aliases: ['um']
-       Mass:
-           enabled: true #enable the Physical Quantity without changes
        CustomQuantity: #create a custom quantity with the following units
            CustomUnit:  #define the native unit
                type: native
@@ -282,5 +276,12 @@ php_units_of_measure:
                factor: .5
                aliases: ['cqut']
 ```
+
+#### Bundle Loading
+
+When the `auto` option is set to `bundles` or `all` the registry manager
+scans the specified bundles for a `PhysicalQuantity` directory for objects 
+that extends the `AbstratPhysicalQuantity` object. This functions similarly 
+to the Symfony 2 Command service registration, except there is no required suffix.
 
 

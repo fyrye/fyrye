@@ -7,6 +7,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -15,6 +16,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class PhpUnitsOfMeasureExtension extends Extension
 {
+
+    const NONE = 1;
+    const INTEGRATED = 2;
+    const BUNDLES = 4;
+    const ALL = self::NONE | self::INTEGRATED | self::BUNDLES;
+    /**
+     * @var integer
+     */
+    private $auto = self::ALL;
+
     /**
      * @var ContainerBuilder
      */
@@ -37,13 +48,23 @@ class PhpUnitsOfMeasureExtension extends Extension
         }
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
-        foreach ($config['units'] as $quantity => $units) {
-            $this->defineQuantity($quantity, $units);
-        }
+        $container->setParameter('php_units_of_measure.auto', $config['auto']);
         $container->setParameter('php_units_of_measure.bundles', $config['bundles']);
-        $this->container
-            ->getDefinition('php_units_of_measure.registry_manager')
-            ->addArgument($config['options']);
+        $this->auto = constant('self::' . $config['auto']);
+        if ($this->auto === self::BUNDLES) {
+            //only bundles was specified
+            return;
+        }
+        if ($this->auto & self::INTEGRATED) {
+            //register integrated quantities prior to custom
+            $this->registerIntegratedQuantities();
+        }
+        if ($this->auto & self::NONE) {
+            //register config defined units
+            foreach ($config['units'] as $quantity => $units) {
+                $this->defineQuantity($quantity, $units);
+            }
+        }
     }
 
     /**
@@ -53,23 +74,24 @@ class PhpUnitsOfMeasureExtension extends Extension
     public function defineQuantity($name, $units)
     {
         $serviceName = 'php_units_of_measure.quantity.' . $this->normalizeName($name);
-        if ($this->container->hasDefinition($serviceName)) {
-            //use existing quantity
-            throw new \RuntimeException('Physical Quantity: "' . $name . '" is already defined.');
-        }
-        $service = $this->container->register($serviceName, '%php_units_of_measure.quantity_definition.class%');
         $namespace = $this->container->getParameter('php_units_of_measure.library.namespace');
         /** @var AbstractPhysicalQuantity $physicalQuantity */
         $physicalQuantity = $namespace . '\\' . ucfirst($name);
         $proxy = !class_exists($physicalQuantity);
-        $service->setArguments(
-            [
-                $name,
-                $proxy ? $this->container->getParameter(
-                    'php_units_of_measure.physical_quantity.class'
-                ) : $physicalQuantity,
-            ]
-        );
+        if ($this->container->hasDefinition($serviceName)) {
+            //use the defined physical quantity service and add additional units
+            $service = $this->container->getDefinition($serviceName);
+        } else {
+            $service = $this->container->register($serviceName, '%php_units_of_measure.quantity_definition.class%');
+            $service->setArguments(
+                [
+                    $name,
+                    $proxy ? $this->container->getParameter(
+                        'php_units_of_measure.physical_quantity.class'
+                    ) : $physicalQuantity,
+                ]
+            );
+        }
         foreach ($units as $unitName => $unit) {
             $type = $proxy ? $unit['type'] : 'linear';
             switch ($type) {
@@ -89,6 +111,27 @@ class PhpUnitsOfMeasureExtension extends Extension
         $this->container
             ->getDefinition('php_units_of_measure.registry_manager')
             ->addMethodCall('registerDefinition', [new Reference($serviceName)]);
+    }
+
+    /**
+     * finds and registers the integrated quantities
+     */
+    private function registerIntegratedQuantities()
+    {
+        if (!class_exists(Finder::class)) {
+            throw new \RuntimeException(
+                'You need the symfony/finder component to register PhysicalQuantity objects from integrated.'
+            );
+        }
+        $r = new \ReflectionClass(AbstractPhysicalQuantity::class);
+        $integratedPath = dirname($r->getFileName()) . '/PhysicalQuantity';
+        if (is_dir($integratedPath)) {
+            $finder = new Finder();
+            $finder->files()->name('*.php')->in($integratedPath);
+            foreach ($finder as $file) {
+                $this->defineQuantity(basename($file, '.php'), []);
+            }
+        }
     }
 
     /**
