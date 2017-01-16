@@ -72,7 +72,7 @@ class PhpUnitsOfMeasureExtension extends Extension
 
     /**
      * @param string $name
-     * @param array|boolean $units
+     * @param array $units
      */
     public function defineQuantity($name, $units)
     {
