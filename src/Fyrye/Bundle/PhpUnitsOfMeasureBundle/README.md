@@ -275,6 +275,7 @@ _`app/config/config.yml`_
 php_units_of_measure:
     enabled: true #enable the service
     auto: all
+    twig: true
     units:
        Mass: { enabled: true } #enable the Physical Quantity without changes
        Length: #enable the Length Physical Quantity and add custom units 
