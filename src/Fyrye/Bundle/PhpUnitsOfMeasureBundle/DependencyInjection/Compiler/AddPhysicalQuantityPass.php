@@ -28,15 +28,16 @@ class AddPhysicalQuantityPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('php_units_of_measure.registry_manager')) {
-            return;
-        }
-        if (!class_exists(AbstractPhysicalQuantity::class)) {
+        if (
+            !$container->hasDefinition('php_units_of_measure.registry_manager') ||
+            !class_exists(AbstractPhysicalQuantity::class) ||
+            !in_array($container->getParameter('php_units_of_measure.auto'), ['ALL', 'BUNDLES'], true)
+        ) {
             return;
         }
         if (!class_exists(Finder::class)) {
             throw new \RuntimeException(
-                'You need the symfony/finder component to register bundle PhysicalQuantity objects.'
+                'You need the symfony/finder component to register PhysicalQuantity objects from bundles.'
             );
         }
         /** @var array|null $bundles */
