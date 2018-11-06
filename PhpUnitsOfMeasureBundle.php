@@ -1,4 +1,5 @@
 <?php
+
 namespace Fyrye\Bundle\PhpUnitsOfMeasureBundle;
 
 use Fyrye\Bundle\PhpUnitsOfMeasureBundle\DependencyInjection\Compiler\AddPhysicalQuantityPass;
@@ -15,6 +16,7 @@ class PhpUnitsOfMeasureBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        parent::build($container);
         $container->addCompilerPass(new AddPhysicalQuantityPass());
     }
 }

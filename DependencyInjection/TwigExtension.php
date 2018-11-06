@@ -4,7 +4,8 @@
  * @author fyrye <admin@fyrye.com>
  * @version 2017.01.14
  */
-namespace Fyrye\Bundle\PhpUnitsOfMeasureBundle\Twig;
+
+namespace Fyrye\Bundle\PhpUnitsOfMeasureBundle\DependencyInjection;
 
 use Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\Manager;
 use Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\QuantityDefinition;
@@ -23,14 +24,22 @@ class TwigExtension extends \Twig_Extension
     private $manager;
 
     /**
+     * TwigExtension constructor.
+     * @param \Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry\Manager $manager
+     */
+    public function __construct(Manager $manager)
+    {
+        $this->setManager($manager);
+    }
+
+    /**
      * @param array|QuantityDefinition[] $definitions
      */
     protected function setDefinitions($definitions)
     {
         foreach ($definitions as $name => $definition) {
-            $quantity = $name;
             $this->filters[] = new \Twig_SimpleFilter(
-                'uom_' . $quantity,
+                'uom_' . $name,
                 function ($value, $from, $to) use ($definition) {
                     return $definition->getUnit($value, $from)->toUnit($to);
                 }
@@ -40,7 +49,7 @@ class TwigExtension extends \Twig_Extension
 
     /**
      * @param Manager $manager
-     * @return \Twig_SimpleFilter
+     * @return void
      */
     public function setManager(Manager $manager)
     {
