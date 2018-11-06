@@ -4,6 +4,7 @@
  * @author fyrye <admin@fyrye.com>
  * @version 2017.01.15
  */
+
 namespace Fyrye\Bundle\PhpUnitsOfMeasureBundle\Registry;
 
 /**
@@ -16,23 +17,6 @@ class Manager
      * @var array
      */
     private static $registry = [];
-
-    /**
-     * @var static
-     */
-    private static $instance;
-
-    /**
-     * @return static
-     */
-    public static function getInstance()
-    {
-        if (!self::$instance) {
-            self::$instance = new static();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * add a quantity to the registry

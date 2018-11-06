@@ -13,4 +13,9 @@ services:
         resource: '../../src/FrontEndBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/FrontEndBundle/{Entity,Repository}'
+        exclude: '../../src/FrontEndBundle/{Entity}'
+
+    FrontEndBundle\Controller\:
+        resource: '../../src/FrontEndBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']

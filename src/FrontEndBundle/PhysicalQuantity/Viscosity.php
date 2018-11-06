@@ -41,33 +41,3 @@ class Viscosity extends AbstractPhysicalQuantity
         static::addUnit($stoke);
     }
 }
-
-/*
- * static::addMissingSIPrefixedUnits(
-            $cst,
-            1,
-            '%pcst',
-            [
-                '%Pcentistokes',
-            ]
-        );
-        $ssu = new UnitOfMeasure(
-            'saybolt',
-            function ($x) {
-                if ($x < 20.65) {
-                    return 0.226 / $x + 195 * $x;
-                }
-
-                return 0.22 / $x + 135 * $x;
-            },
-            function ($x) {
-                if ($x < 100) {
-                    return 0.226 * $x - 195 / $x;
-                }
-
-                return 0.22 * $x - 135 / $x;
-            }
-        );
-        $ssu->addAlias('ssu');
-        static::addUnit($ssu);
- */

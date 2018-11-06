@@ -10,17 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    private $bundles;
-
-    /**
-     * Constructor
-     *
-     * @param array $bundles An array of bundle names
-     */
-    public function __construct(array $bundles)
-    {
-        $this->bundles = $bundles;
-    }
 
     /**
      * {@inheritdoc}
@@ -36,9 +25,9 @@ class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
                 ->enumNode('auto')
-                    ->info('Allow for the manager to automatically register undefined Physical Quantities by bundles, integrated, all or none')
+                    ->info('Allow for the manager to automatically register undefined Physical Quantities by integrated, all or manual')
                     ->defaultValue('all')
-                    ->values(['ALL', 'BUNDLES', 'INTEGRATED', 'NONE'])
+                    ->values(['ALL', 'INTEGRATED', 'MANUAL'])
                     ->treatNullLike('all')
                     ->beforeNormalization()
                         ->always(function($v){ return strtoupper($v); })
@@ -48,17 +37,6 @@ class Configuration implements ConfigurationInterface
                     ->info('Control the use of the twig extension')
                     ->defaultTrue()
                     ->treatNullLike(true)
-                ->end()
-                ->arrayNode('bundles')
-                    ->info('Listing of Bundles to search for custom Physical Quantities.')
-                    ->defaultValue($this->bundles)
-                    ->treatNullLike($this->bundles)
-                    ->prototype('scalar')
-                        ->validate()
-                            ->ifNotInArray($this->bundles)
-                            ->thenInvalid('%s is not a valid bundle.')
-                        ->end()
-                    ->end()
                 ->end()
                 ->arrayNode('units')
                     ->info('Extend the integrated units with additional units, Like: Time, Length. If a physical quantity does not exist it will be created.')
