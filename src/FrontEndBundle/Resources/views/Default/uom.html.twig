@@ -3,16 +3,13 @@
 {% block title %}Unit Of Measure{% endblock %}
 
 {% block body %}
-    <p>1 yard = {{ feet }} feet or {{ inches }} inches</p>
-    <p>2 yards = {{ feet_2 }} feet or {{ inches_2 }} inches</p>
-    <p>1 mile = {{ mile_feet }} feet</p>
-    <p>1 pascal = {{ psi }} psi</p>
+    {% for unit in units %}
+        <p>1 {{ unit.from }} = {{ unit.amount }} {{ unit.to }}</p>
+    {% endfor %}
     <p>6 feet = {{ 6|uom_length('ft', 'yd') }} yards</p>
     <p>8 miles = {{ uom('length', 8, 'mi').toUnit('yd') }} yards</p>
     <p>8 gallons = {{ uom('volume', 8, 'gal').toUnit('pt') }} pints</p>
-    <p>1 stoke = {{ cst }} cst</p>
     <p>1 cst = {{ 1|uom_viscosity('cst', 's') }} stoke</p>
-    <p>1 um = {{ m }} meters</p>
 {% endblock %}
 
 
